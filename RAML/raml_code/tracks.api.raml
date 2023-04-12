@@ -1,0 +1,274 @@
+#%RAML 1.0
+title: Music Hub API
+
+types: 
+    Tracks:
+
+# Get All Tracks
+/tracks:
+get:
+    displayName: Get All Tracks
+    description: Retrieves all tracks
+    securedBy: [JWT]
+    headers:
+        Requester-ID:
+            displayName: Bearer Token
+            description: JWT token to authorize to access the data
+            type: string
+            requried: true
+            authorization: Bearer token_name
+    responses:
+        200:
+            body:
+                application/json:
+                    type: Tracks[]
+                    example: 
+                        [
+                            {
+                                id: "1"
+                                title: "Track 1"
+                                artist: ["Ed", "Bob"]
+                                thumbnail: "http://fakethumbnail.jpg"
+                                release_year: 2023
+                                duration: "3:40"
+                                likes: 0
+                                category: ["awesome", "fun"]
+                                uri: "http://fakeurl.com"
+                                created: 2023-03-31T04:18:34.424Z
+                            }
+                        ]
+        400:
+            body:
+                application/json:
+                    example: Error retrieving data
+
+# Get Tracks by Id / Delete Track by Id / Update Track with Id
+/tracks/:id:
+get:
+    displayName: Get specific Track by ID
+    description: Retrieves specific track data by ID
+    securedBy: [JWT]
+    headers:
+        Requester-ID:
+            displayName: Bearer Token
+            description: JWT token to authorize to access the data
+            type: string
+            requried: true
+            authorization: Bearer token_name
+    queryParameters:
+        type:
+            id: Track ID
+            description: Track id as a unique identifier
+            type: string
+            requried: true
+    responses:
+        200:
+            body:
+                application/json:
+                    type: Tracks[]
+                    example: 
+                            {
+                                id: "1"
+                                title: "Track 1"
+                                artist: ["Ed", "Bob"]
+                                thumbnail: "http://fakethumbnail.jpg"
+                                release_year: 2023
+                                duration: "3:40"
+                                likes: 0
+                                category: ["awesome", "fun"]
+                                uri: "http://fakeurl.com"
+                                created: 2023-03-31T04:18:34.424Z
+                            }
+        400:
+            body:
+                application/json:
+                    example: Error retrieving data
+delete:
+    displayName: Delete specific Track by ID
+    description: Delete specific track data by its ID
+    securedBy: [JWT]
+    headers:
+        Requester-ID:
+            displayName: Bearer Token
+            description: JWT token to authorize to access the data
+            type: string
+            requried: true
+            authorization: Bearer token_name
+    queryParameters:
+        type:
+            id: Track ID
+            description: Track id as a unique identifier
+            type: string
+            requried: true
+    responses:
+        201:
+            body:
+                application/json:
+                    example: 
+                    message: Track deleted successfully
+        400:
+            body:
+                application/json:
+                    example: Error deleting Track
+put:
+    displayName: Update Track bu ID
+    description: Update track data by ID
+    securedBy: [JWT]
+    headers:
+        Requester-ID:
+            displayName: Bearer Token
+            description: JWT token to authorize to access the data
+            type: string
+            requried: true
+            authorization: Bearer token_name
+    body:
+        application/json:
+            type: Tracks[]
+            example: 
+                {
+                    title: "Track 3"
+                    artist: ["Ed", "Bob"]
+                    thumbnail: "http://fakethumbnail.jpg"
+                    release_year: 2023
+                    duration: "3:40"
+                    likes: 0
+                    category: ["awesome", "fun"]
+                    uri: "http://fakeurl.com"
+                }
+    responses:
+        201:
+            body:
+                application/json:
+                    example: 
+                    message: Track updated successfully
+        400:
+            body:
+                application/json:
+                    example: Error updating Track
+
+# Get All Tracks  with Artist Name
+/tracks/artist/:name:
+get:
+    displayName: Get all Tracks by artist name
+    description: Retrieves all tracks by artist name
+    securedBy: [JWT]
+    headers:
+        Requester-ID:
+            displayName: Bearer Token
+            description: JWT token to authorize to access the data
+            type: string
+            requried: true
+            authorization: Bearer token_name
+    queryParameters:
+        type:
+            name: Artist Name
+            description: Search all tracks by Artist Name
+            type: string
+            requried: true
+    responses:
+        200:
+            body:
+                application/json:
+                    type: Tracks[]
+                    example: 
+                            [
+                                {
+                                    id: "1"
+                                    title: "Track 1"
+                                    artist: ["Ed", "Bob"]
+                                    thumbnail: "http://fakethumbnail.jpg"
+                                    release_year: 2023
+                                    duration: "3:40"
+                                    likes: 0
+                                    category: ["awesome", "fun"]
+                                    uri: "http://fakeurl.com"
+                                    created: 2023-03-31T04:18:34.424Z
+                                }
+                            ]
+        400:
+            body:
+                application/json:
+                    example: Error retrieving data
+
+# Get Track with Title Name
+/tracks/title/:title:
+get:
+    displayName: Get Track by Title name
+    description: Retrieve track by Title name
+    securedBy: [JWT]
+    headers:
+        Requester-ID:
+            displayName: Bearer Token
+            description: JWT token to authorize to access the data
+            type: string
+            requried: true
+            authorization: Bearer token_name
+    queryParameters:
+        type:
+            title: Track Title
+            description: Search track by Track Title
+            type: string
+            requried: true
+    responses:
+        200:
+            body:
+                application/json:
+                    type: Tracks[]
+                    example: 
+                            [
+                                {
+                                    id: "1"
+                                    title: "Track 1"
+                                    artist: ["Ed", "Bob"]
+                                    thumbnail: "http://fakethumbnail.jpg"
+                                    release_year: 2023
+                                    duration: "3:40"
+                                    likes: 0
+                                    category: ["awesome", "fun"]
+                                    uri: "http://fakeurl.com"
+                                    created: 2023-03-31T04:18:34.424Z
+                                }
+                            ]
+        400:
+            body:
+                application/json:
+                    example: Error retrieving data
+
+# Add Track
+/tracks/add:
+post:
+    displayName: Add Track
+    description: Add new track
+    securedBy: [JWT]
+    headers:
+        Requester-ID:
+            displayName: Bearer Token
+            description: JWT token to authorize to access the data
+            type: string
+            requried: true
+            authorization: Bearer token_name
+    body:
+        application/json:
+            type: Tracks[]
+            example: 
+                {
+                    title: "Track 3"
+                    artist: ["Ed", "Bob"]
+                    thumbnail: "http://fakethumbnail.jpg"
+                    release_year: 2023
+                    duration: "3:40"
+                    likes: 0
+                    category: ["awesome", "fun"]
+                    uri: "http://fakeurl.com"
+                }
+    responses:
+        201:
+            body:
+                application/json:
+                    example: 
+                    message: Track created successfully
+        400:
+            body:
+                application/json:
+                    example: Error creating Track
+
